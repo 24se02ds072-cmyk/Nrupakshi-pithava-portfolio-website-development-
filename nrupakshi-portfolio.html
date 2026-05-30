@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nrupakshi Pithava | Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0d0d0f;
+      --surface: #141418;
+      --card: #1a1a22;
+      --accent: #e8b86d;
+      --accent2: #c97f4a;
+      --accent3: #7b5ea7;
+      --text: #f0eae0;
+      --muted: #8a8490;
+      --border: rgba(232,184,109,0.18);
+      --glow: 0 0 40px rgba(232,184,109,0.12);
+    }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ─── NOISE OVERLAY ─── */
+    body::before {
+      content:'';
+      position:fixed; inset:0; z-index:0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events:none; opacity:0.5;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top:0; left:0; right:0; z-index:100;
+      display:flex; justify-content:space-between; align-items:center;
+      padding: 1.2rem 3rem;
+      background: rgba(13,13,15,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.02em;
+    }
+    .nav-links { display:flex; gap: 2rem; list-style:none; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration:none;
+      font-size: 0.9rem;
+      font-weight:500;
+      letter-spacing:0.04em;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ─── HERO ─── */
+    #hero {
+      position:relative; z-index:1;
+      min-height:100vh;
+      display:flex; align-items:center;
+      padding: 8rem 3rem 4rem;
+      overflow:hidden;
+    }
+    .hero-bg-circle {
+      position:absolute;
+      border-radius:50%;
+      filter:blur(80px);
+      pointer-events:none;
+    }
+    .hero-bg-circle.c1 {
+      width:500px; height:500px;
+      background: rgba(232,184,109,0.07);
+      top:-100px; right:-100px;
+      animation: floatA 8s ease-in-out infinite;
+    }
+    .hero-bg-circle.c2 {
+      width:350px; height:350px;
+      background: rgba(123,94,167,0.08);
+      bottom:0; left:-50px;
+      animation: floatB 10s ease-in-out infinite;
+    }
+    @keyframes floatA { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-30px,30px)} }
+    @keyframes floatB { 0%,100%{transform:translate(0,0)} 50%{transform:translate(20px,-20px)} }
+
+    .hero-inner {
+      display:grid; grid-template-columns:1fr 1fr;
+      gap: 4rem; align-items:center;
+      max-width:1200px; margin:0 auto; width:100%;
+    }
+    .hero-tag {
+      display:inline-block;
+      background: rgba(232,184,109,0.1);
+      border: 1px solid var(--border);
+      color: var(--accent);
+      font-size:0.78rem;
+      font-weight:600;
+      letter-spacing:0.12em;
+      text-transform:uppercase;
+      padding:0.35rem 1rem;
+      border-radius:50px;
+      margin-bottom:1.5rem;
+      animation: fadeUp 0.8s ease both;
+    }
+    .hero-name {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      font-weight:900;
+      line-height:1.05;
+      margin-bottom:1rem;
+      animation: fadeUp 0.8s 0.1s ease both;
+    }
+    .hero-name span { color: var(--accent); font-style:italic; }
+    .hero-subtitle {
+      font-size:1.15rem;
+      color: var(--muted);
+      line-height:1.7;
+      margin-bottom:2rem;
+      max-width:480px;
+      animation: fadeUp 0.8s 0.2s ease both;
+    }
+    .hero-subtitle strong { color: var(--text); }
+    .hero-cta-row {
+      display:flex; gap:1rem; flex-wrap:wrap;
+      animation: fadeUp 0.8s 0.3s ease both;
+    }
+    .btn {
+      display:inline-flex; align-items:center; gap:0.5rem;
+      padding: 0.75rem 1.8rem;
+      border-radius:8px;
+      font-family:'DM Sans',sans-serif;
+      font-size:0.9rem;
+      font-weight:600;
+      cursor:pointer;
+      text-decoration:none;
+      transition: all 0.3s;
+      border: none;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #0d0d0f;
+    }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(232,184,109,0.3); }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .btn-outline:hover { border-color: var(--accent); color:var(--accent); transform:translateY(-2px); }
+
+    /* ─── HERO AVATAR ─── */
+    .hero-visual {
+      display:flex; justify-content:center; align-items:center;
+      animation: fadeUp 0.8s 0.4s ease both;
+    }
+    .avatar-frame {
+      position:relative;
+      width:320px; height:380px;
+    }
+    .avatar-frame::before {
+      content:'';
+      position:absolute; inset:-2px;
+      border-radius:30px;
+      background: linear-gradient(135deg, var(--accent), var(--accent3), var(--accent2));
+      z-index:0;
+    }
+    .avatar-inner {
+      position:absolute; inset:2px;
+      border-radius:28px;
+      background: linear-gradient(145deg, #1a1a22, #111116);
+      z-index:1;
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center;
+      overflow:hidden;
+    }
+    .avatar-initials {
+      font-family:'Playfair Display',serif;
+      font-size:5rem;
+      font-weight:900;
+      color: var(--accent);
+      line-height:1;
+    }
+    .avatar-label {
+      margin-top:0.5rem;
+      font-size:0.8rem;
+      color:var(--muted);
+      letter-spacing:0.1em;
+      text-transform:uppercase;
+    }
+    .avatar-deco {
+      position:absolute;
+      width:80px; height:80px;
+      border-radius:50%;
+      border:2px solid rgba(232,184,109,0.2);
+    }
+    .avatar-deco.d1 { top:-20px; right:-20px; }
+    .avatar-deco.d2 { bottom:-15px; left:-15px; width:50px;height:50px; }
+
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(24px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    /* ─── SECTION COMMON ─── */
+    section { position:relative; z-index:1; padding: 5rem 3rem; }
+    .section-inner { max-width:1200px; margin:0 auto; }
+    .section-label {
+      font-size:0.75rem;
+      font-weight:600;
+      letter-spacing:0.18em;
+      text-transform:uppercase;
+      color: var(--accent);
+      margin-bottom:0.5rem;
+    }
+    .section-title {
+      font-family:'Playfair Display',serif;
+      font-size:clamp(2rem,4vw,3rem);
+      font-weight:800;
+      line-height:1.15;
+      margin-bottom:1rem;
+    }
+    .section-title span { color:var(--accent); font-style:italic; }
+    .section-divider {
+      width:60px; height:3px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      border-radius:2px;
+      margin-bottom:3rem;
+    }
+
+    /* ─── ABOUT ─── */
+    #about { background: var(--surface); }
+    .about-grid {
+      display:grid; grid-template-columns:1fr 1fr;
+      gap:4rem; align-items:start;
+    }
+    .about-text p {
+      color:var(--muted); font-size:1.02rem;
+      line-height:1.85; margin-bottom:1.2rem;
+    }
+    .about-text p strong { color:var(--text); }
+    .info-chips {
+      display:flex; flex-wrap:wrap; gap:0.75rem; margin-top:2rem;
+    }
+    .chip {
+      display:flex; align-items:center; gap:0.45rem;
+      background: var(--card);
+      border:1px solid var(--border);
+      border-radius:50px;
+      padding:0.45rem 1rem;
+      font-size:0.82rem;
+      color:var(--text);
+    }
+    .chip-icon { font-size:1rem; }
+
+    /* ─── SKILLS ─── */
+    #skills {}
+    .skills-grid {
+      display:grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px,1fr));
+      gap:1.5rem;
+    }
+    .skill-card {
+      background: var(--card);
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:1.8rem;
+      transition: all 0.3s;
+      position:relative;
+      overflow:hidden;
+    }
+    .skill-card::before {
+      content:'';
+      position:absolute; top:0; left:0; right:0;
+      height:2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent3));
+      opacity:0;
+      transition:opacity 0.3s;
+    }
+    .skill-card:hover { transform:translateY(-4px); box-shadow:var(--glow); border-color:rgba(232,184,109,0.35); }
+    .skill-card:hover::before { opacity:1; }
+    .skill-icon { font-size:2rem; margin-bottom:0.8rem; }
+    .skill-name { font-weight:700; font-size:1.05rem; margin-bottom:0.5rem; }
+    .skill-desc { color:var(--muted); font-size:0.88rem; line-height:1.6; }
+    .skill-bar-wrap { margin-top:1rem; }
+    .skill-bar-label { display:flex; justify-content:space-between; font-size:0.78rem; color:var(--muted); margin-bottom:0.4rem; }
+    .skill-bar-bg { background:rgba(255,255,255,0.06); border-radius:50px; height:4px; overflow:hidden; }
+    .skill-bar-fill { height:100%; border-radius:50px; background:linear-gradient(90deg,var(--accent),var(--accent2)); transition:width 1.2s ease; }
+
+    /* ─── INTERNSHIP ─── */
+    #internship { background: var(--surface); }
+    .internship-card {
+      background: var(--card);
+      border:1px solid var(--border);
+      border-radius:20px;
+      padding:2.5rem;
+      position:relative;
+      overflow:hidden;
+      max-width:800px;
+    }
+    .internship-card::after {
+      content:'';
+      position:absolute;
+      top:-60px; right:-60px;
+      width:200px; height:200px;
+      border-radius:50%;
+      background: rgba(232,184,109,0.06);
+    }
+    .intern-badge {
+      display:inline-flex; align-items:center; gap:0.5rem;
+      background:rgba(232,184,109,0.12);
+      border:1px solid rgba(232,184,109,0.25);
+      border-radius:50px;
+      padding:0.4rem 1rem;
+      font-size:0.8rem;
+      font-weight:600;
+      color:var(--accent);
+      text-transform:uppercase;
+      letter-spacing:0.08em;
+      margin-bottom:1.5rem;
+    }
+    .intern-org {
+      font-family:'Playfair Display',serif;
+      font-size:1.8rem;
+      font-weight:800;
+      margin-bottom:0.4rem;
+    }
+    .intern-org span { color:var(--accent); }
+    .intern-role {
+      color:var(--muted);
+      font-size:1rem;
+      margin-bottom:1.5rem;
+    }
+    .intern-details {
+      display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+      gap:1rem; margin-bottom:1.8rem;
+    }
+    .intern-detail-item {
+      background:rgba(255,255,255,0.03);
+      border-radius:10px;
+      padding:0.8rem 1rem;
+    }
+    .intern-detail-key { font-size:0.72rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; }
+    .intern-detail-val { font-size:0.95rem; font-weight:600; color:var(--text); margin-top:0.2rem; }
+    .intern-points { list-style:none; display:flex; flex-direction:column; gap:0.8rem; }
+    .intern-points li {
+      display:flex; gap:0.75rem; align-items:flex-start;
+      font-size:0.95rem; color:var(--muted); line-height:1.6;
+    }
+    .intern-points li::before {
+      content:'◆';
+      color:var(--accent);
+      font-size:0.55rem;
+      margin-top:0.35rem;
+      flex-shrink:0;
+    }
+
+    /* ─── RESUME ─── */
+    #resume {}
+    .resume-placeholder {
+      max-width:700px;
+      background: var(--card);
+      border:2px dashed rgba(232,184,109,0.3);
+      border-radius:20px;
+      padding:3rem;
+      text-align:center;
+    }
+    .resume-icon { font-size:4rem; margin-bottom:1rem; }
+    .resume-title {
+      font-family:'Playfair Display',serif;
+      font-size:1.6rem;
+      font-weight:700;
+      margin-bottom:0.7rem;
+    }
+    .resume-sub { color:var(--muted); font-size:0.95rem; line-height:1.7; margin-bottom:2rem; }
+    .resume-meta {
+      display:flex; flex-wrap:wrap; gap:1rem;
+      justify-content:center; margin-bottom:2rem;
+    }
+    .resume-meta-item {
+      background:rgba(232,184,109,0.08);
+      border-radius:8px;
+      padding:0.5rem 1rem;
+      font-size:0.85rem;
+      color:var(--accent);
+      font-weight:500;
+    }
+    .resume-note {
+      font-size:0.8rem; color:var(--muted);
+      border:1px solid var(--border);
+      border-radius:8px;
+      padding:0.8rem 1.2rem;
+      background:rgba(255,255,255,0.02);
+      line-height:1.6;
+    }
+
+    /* ─── CONTACT ─── */
+    #contact { background:var(--surface); }
+    .contact-grid {
+      display:grid; grid-template-columns:1fr 1fr;
+      gap:4rem; align-items:start;
+    }
+    .contact-intro p {
+      color:var(--muted); font-size:1rem;
+      line-height:1.8; margin-bottom:1.5rem;
+    }
+    .contact-links { display:flex; flex-direction:column; gap:1rem; }
+    .contact-link {
+      display:flex; align-items:center; gap:1rem;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:1rem 1.5rem;
+      text-decoration:none;
+      color:var(--text);
+      transition:all 0.3s;
+    }
+    .contact-link:hover { border-color:var(--accent); transform:translateX(6px); }
+    .contact-link-icon {
+      width:42px; height:42px;
+      border-radius:10px;
+      background:rgba(232,184,109,0.1);
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.2rem;
+      flex-shrink:0;
+    }
+    .contact-link-info { flex:1; }
+    .contact-link-label { font-size:0.75rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; }
+    .contact-link-value { font-size:0.95rem; font-weight:500; margin-top:0.15rem; }
+    .contact-link-arrow { color:var(--muted); }
+
+    /* contact form */
+    .contact-form { display:flex; flex-direction:column; gap:1.2rem; }
+    .form-group { display:flex; flex-direction:column; gap:0.45rem; }
+    .form-label { font-size:0.82rem; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; }
+    .form-input, .form-textarea {
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:10px;
+      padding:0.85rem 1.1rem;
+      color:var(--text);
+      font-family:'DM Sans',sans-serif;
+      font-size:0.95rem;
+      transition:border-color 0.3s;
+      outline:none;
+    }
+    .form-input:focus, .form-textarea:focus { border-color:var(--accent); }
+    .form-textarea { min-height:120px; resize:vertical; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      position:relative; z-index:1;
+      background:var(--bg);
+      border-top:1px solid var(--border);
+      padding:2.5rem 3rem;
+      display:flex; justify-content:space-between; align-items:center;
+      flex-wrap:wrap; gap:1rem;
+    }
+    .footer-brand {
+      font-family:'Playfair Display',serif;
+      font-size:1.1rem;
+      color:var(--accent);
+    }
+    .footer-copy { color:var(--muted); font-size:0.85rem; }
+
+    /* ─── RESPONSIVE ─── */
+    @media(max-width:768px) {
+      nav { padding:1rem 1.5rem; }
+      .nav-links { gap:1rem; }
+      section { padding:3.5rem 1.5rem; }
+      .hero-inner, .about-grid, .contact-grid { grid-template-columns:1fr; gap:2.5rem; }
+      .hero-visual { order:-1; }
+      .avatar-frame { width:220px; height:260px; }
+      footer { flex-direction:column; text-align:center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════ NAV ══════ -->
+<nav>
+  <div class="nav-logo">NP</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#internship">Internship</a></li>
+    <li><a href="#resume">Resume</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ══════ HERO ══════ -->
+<section id="hero">
+  <div class="hero-bg-circle c1"></div>
+  <div class="hero-bg-circle c2"></div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-tag">✦ B.Tech CSE Student</div>
+      <h1 class="hero-name">
+        Nrupakshi<br/><span>Pithava</span>
+      </h1>
+      <p class="hero-subtitle">
+        Aspiring <strong>Computer Science Engineer</strong> at P.P. Savani University &mdash;
+        passionate about building technology and solving real-world problems through code.
+      </p>
+      <div class="hero-cta-row">
+        <a href="#contact" class="btn btn-primary">Get in Touch →</a>
+        <a href="#resume" class="btn btn-outline">View Resume</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="avatar-frame">
+        <div class="avatar-deco d1"></div>
+        <div class="avatar-deco d2"></div>
+        <div class="avatar-inner">
+          <div class="avatar-initials">NP</div>
+          <div class="avatar-label">CSE Student</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ ABOUT ══════ -->
+<section id="about">
+  <div class="section-inner">
+    <div class="section-label">Who I Am</div>
+    <h2 class="section-title">About <span>Me</span></h2>
+    <div class="section-divider"></div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          Hello! I'm <strong>Nrupakshi Pithava</strong>, a dedicated B.Tech student in
+          <strong>Computer Science & Engineering</strong> at P.P. Savani University.
+          I am driven by curiosity and a passion for technology that solves real problems.
+        </p>
+        <p>
+          I am currently gaining hands-on industry experience through my internship at
+          <strong>OASIS Information Technology</strong>, where I am applying academic
+          knowledge to practical, real-world projects and sharpening my development skills.
+        </p>
+        <p>
+          I believe in continuous learning, collaborative teamwork, and delivering
+          quality work. My goal is to contribute meaningfully to the tech industry
+          and grow as a software professional.
+        </p>
+        <div class="info-chips">
+          <div class="chip"><span class="chip-icon">🎓</span> B.Tech CSE</div>
+          <div class="chip"><span class="chip-icon">🏛️</span> P.P. Savani University</div>
+          <div class="chip"><span class="chip-icon">💼</span> OASIS Intern</div>
+          <div class="chip"><span class="chip-icon">📍</span> India</div>
+        </div>
+      </div>
+      <div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2rem;">
+          <div style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin-bottom:1.5rem;color:var(--accent);">Quick Facts</div>
+          <div style="display:flex;flex-direction:column;gap:1rem;">
+            <div style="display:flex;gap:1rem;align-items:center;">
+              <div style="width:36px;height:36px;border-radius:8px;background:rgba(232,184,109,0.1);display:flex;align-items:center;justify-content:center;font-size:1.1rem;">📚</div>
+              <div>
+                <div style="font-size:0.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;">Degree</div>
+                <div style="font-weight:600;font-size:0.95rem;">Bachelor of Technology (B.Tech)</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:1rem;align-items:center;">
+              <div style="width:36px;height:36px;border-radius:8px;background:rgba(232,184,109,0.1);display:flex;align-items:center;justify-content:center;font-size:1.1rem;">💡</div>
+              <div>
+                <div style="font-size:0.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;">Specialization</div>
+                <div style="font-weight:600;font-size:0.95rem;">Computer Science & Engineering</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:1rem;align-items:center;">
+              <div style="width:36px;height:36px;border-radius:8px;background:rgba(232,184,109,0.1);display:flex;align-items:center;justify-content:center;font-size:1.1rem;">🏫</div>
+              <div>
+                <div style="font-size:0.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;">University</div>
+                <div style="font-weight:600;font-size:0.95rem;">P.P. Savani University</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:1rem;align-items:center;">
+              <div style="width:36px;height:36px;border-radius:8px;background:rgba(232,184,109,0.1);display:flex;align-items:center;justify-content:center;font-size:1.1rem;">🌐</div>
+              <div>
+                <div style="font-size:0.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;">Internship</div>
+                <div style="font-weight:600;font-size:0.95rem;">OASIS Information Technology</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ SKILLS ══════ -->
+<section id="skills">
+  <div class="section-inner">
+    <div class="section-label">What I Know</div>
+    <h2 class="section-title">My <span>Skills</span></h2>
+    <div class="section-divider"></div>
+    <div class="skills-grid">
+
+      <div class="skill-card">
+        <div class="skill-icon">🌐</div>
+        <div class="skill-name">HTML &amp; CSS</div>
+        <div class="skill-desc">Crafting structured, responsive, and visually appealing web interfaces.</div>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar-label"><span>Proficiency</span><span>80%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:80%"></div></div>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-icon">⚡</div>
+        <div class="skill-name">JavaScript</div>
+        <div class="skill-desc">Building interactive features and dynamic web applications.</div>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar-label"><span>Proficiency</span><span>70%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:70%"></div></div>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-icon">🐍</div>
+        <div class="skill-name">Python</div>
+        <div class="skill-desc">Programming fundamentals, scripting, and data-oriented tasks.</div>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar-label"><span>Proficiency</span><span>72%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:72%"></div></div>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-icon">☕</div>
+        <div class="skill-name">Java</div>
+        <div class="skill-desc">Object-oriented programming principles and application development.</div>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar-label"><span>Proficiency</span><span>65%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:65%"></div></div>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-icon">🗄️</div>
+        <div class="skill-name">SQL / Databases</div>
+        <div class="skill-desc">Designing and querying relational databases using MySQL and SQLite.</div>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar-label"><span>Proficiency</span><span>68%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:68%"></div></div>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-icon">🔧</div>
+        <div class="skill-name">C / C++</div>
+        <div class="skill-desc">Core programming, data structures, and algorithmic problem-solving.</div>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar-label"><span>Proficiency</span><span>75%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:75%"></div></div>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-icon">📊</div>
+        <div class="skill-name">Data Structures &amp; Algorithms</div>
+        <div class="skill-desc">Problem-solving using arrays, trees, graphs, sorting and searching.</div>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar-label"><span>Proficiency</span><span>70%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:70%"></div></div>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-icon">🐙</div>
+        <div class="skill-name">Git &amp; GitHub</div>
+        <div class="skill-desc">Version control, collaboration, and managing code repositories.</div>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar-label"><span>Proficiency</span><span>65%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:65%"></div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════ INTERNSHIP ══════ -->
+<section id="internship">
+  <div class="section-inner">
+    <div class="section-label">Experience</div>
+    <h2 class="section-title">OASIS <span>Internship</span></h2>
+    <div class="section-divider"></div>
+    <div class="internship-card">
+      <div class="intern-badge">🔖 Internship Certificate</div>
+      <div class="intern-org">OASIS <span>Information Technology</span></div>
+      <div class="intern-role">B.Tech CSE Intern &nbsp;·&nbsp; Web Development &amp; Software Engineering</div>
+      <div class="intern-details">
+        <div class="intern-detail-item">
+          <div class="intern-detail-key">Organization</div>
+          <div class="intern-detail-val">OASIS Infotech</div>
+        </div>
+        <div class="intern-detail-item">
+          <div class="intern-detail-key">Type</div>
+          <div class="intern-detail-val">Technical Internship</div>
+        </div>
+        <div class="intern-detail-item">
+          <div class="intern-detail-key">Domain</div>
+          <div class="intern-detail-val">Web &amp; Software Dev</div>
+        </div>
+        <div class="intern-detail-item">
+          <div class="intern-detail-key">Status</div>
+          <div class="intern-detail-val" style="color:var(--accent);">✓ In Progress</div>
+        </div>
+      </div>
+      <ul class="intern-points">
+        <li>Working on real-world web development projects using HTML, CSS, and JavaScript under industry mentorship.</li>
+        <li>Developing and enhancing software modules as part of the OASIS Infotech internship programme.</li>
+        <li>Gaining hands-on experience in software development lifecycle, team collaboration, and coding best practices.</li>
+        <li>Applying academic knowledge from B.Tech CSE curriculum to practical industry challenges.</li>
+        <li>Improving problem-solving and analytical skills through structured project assignments.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ RESUME ══════ -->
+<section id="resume">
+  <div class="section-inner">
+    <div class="section-label">Documents</div>
+    <h2 class="section-title">My <span>Resume</span></h2>
+    <div class="section-divider"></div>
+    <div class="resume-placeholder">
+      <div class="resume-icon">📄</div>
+      <div class="resume-title">Nrupakshi Pithava — CV</div>
+      <p class="resume-sub">
+        My resume highlights my academic background at P.P. Savani University,
+        technical skills, and internship experience at OASIS Information Technology.
+        To attach your resume image, replace this section with an
+        <code style="background:rgba(255,255,255,0.05);padding:2px 6px;border-radius:4px;font-size:0.88rem;">&lt;img&gt;</code> tag
+        pointing to your resume file.
+      </p>
+      <div class="resume-meta">
+        <div class="resume-meta-item">🎓 B.Tech CSE</div>
+        <div class="resume-meta-item">🏛️ P.P. Savani University</div>
+        <div class="resume-meta-item">💼 OASIS Intern</div>
+        <div class="resume-meta-item">📧 nrupakshipithava@gmail.com</div>
+      </div>
+      <!-- 
+        ┌─────────────────────────────────────────────────────────┐
+        │  TO ADD YOUR RESUME IMAGE:                              │
+        │  Replace this comment block with:                      │
+        │                                                         │
+        │  <img src="your-resume.jpg"                            │
+        │       alt="Nrupakshi Pithava Resume"                   │
+        │       style="width:100%;border-radius:12px;            │
+        │              border:1px solid var(--border);" />        │
+        └─────────────────────────────────────────────────────────┘
+      -->
+      <div class="resume-note">
+        💡 <strong>How to add your resume image:</strong> Upload your resume photo/scan,
+        then replace the comment above with<br/>
+        <code style="color:var(--accent);font-size:0.82rem;">&lt;img src="resume.jpg" alt="Resume" style="width:100%;border-radius:12px;"&gt;</code>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ CONTACT ══════ -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="section-label">Reach Out</div>
+    <h2 class="section-title">Get in <span>Touch</span></h2>
+    <div class="section-divider"></div>
+    <div class="contact-grid">
+      <div class="contact-intro">
+        <p>
+          I'm always open to discussing projects, internship opportunities,
+          collaborations, or just a friendly conversation about technology.
+        </p>
+        <p>
+          Feel free to reach me via email or phone — I'd love to connect!
+        </p>
+        <div class="contact-links">
+
+          <a href="mailto:nrupakshipithava@gmail.com" class="contact-link">
+            <div class="contact-link-icon">✉️</div>
+            <div class="contact-link-info">
+              <div class="contact-link-label">Email</div>
+              <div class="contact-link-value">nrupakshipithava@gmail.com</div>
+            </div>
+            <div class="contact-link-arrow">→</div>
+          </a>
+
+          <a href="tel:+91XXXXXXXXXX" class="contact-link">
+            <div class="contact-link-icon">📞</div>
+            <div class="contact-link-info">
+              <div class="contact-link-label">Phone / WhatsApp</div>
+              <div class="contact-link-value">+91 XXXXX XXXXX
+                <span style="font-size:0.75rem;color:var(--muted);display:block;">Replace with your actual number</span>
+              </div>
+            </div>
+            <div class="contact-link-arrow">→</div>
+          </a>
+
+          <div class="contact-link" style="cursor:default;">
+            <div class="contact-link-icon">🏛️</div>
+            <div class="contact-link-info">
+              <div class="contact-link-label">University</div>
+              <div class="contact-link-value">P.P. Savani University, Gujarat</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div>
+        <div class="contact-form">
+          <div class="form-group">
+            <label class="form-label">Your Name</label>
+            <input class="form-input" type="text" placeholder="Full name"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input class="form-input" type="email" placeholder="your@email.com"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Subject</label>
+            <input class="form-input" type="text" placeholder="Internship / Collaboration / Query"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Message</label>
+            <textarea class="form-textarea" placeholder="Write your message here..."></textarea>
+          </div>
+          <button class="btn btn-primary" style="align-self:flex-start;" onclick="alert('Thank you! Message noted. Please use the email above to actually send it.')">
+            Send Message ✦
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ FOOTER ══════ -->
+<footer>
+  <div class="footer-brand">Nrupakshi Pithava</div>
+  <div class="footer-copy">© 2025 · B.Tech CSE · P.P. Savani University · OASIS Intern</div>
+</footer>
+
+<script>
+  // Animate skill bars on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        e.target.querySelectorAll('.skill-bar-fill').forEach(bar => {
+          const w = bar.style.width;
+          bar.style.width = '0';
+          requestAnimationFrame(()=> { bar.style.width = w; });
+        });
+      }
+    });
+  }, { threshold: 0.2 });
+  document.querySelectorAll('#skills').forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
